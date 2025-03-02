@@ -1,3 +1,4 @@
+import numpy as np
 def linear_prime_sieve(n):
     primes = []
     is_prime = [True] * (n + 1)
@@ -24,3 +25,30 @@ def factor_count(n) :
             count += 1
             if i != n // i : count += 1
     return count
+
+def prime_factorize(n) :
+    factors = []
+    for i in range(2, int(n ** 0.5) + 1) :
+        while n % i == 0 :
+            factors.append(i)
+            n //= i
+    if n != 1 : factors.append(n)
+    return factors
+
+def quick_power(x, y, mod) :
+    res = 1
+    while y > 0 :
+        if y & 1 : res = res * x % mod
+        x = x * x % mod
+        y >>= 1
+    return res
+
+def matrix_quick_power(mat, n, mod) :
+    pd = len(mat)
+    res = np.zeros((pd, pd), int)
+    for i in range(pd) : res[i][i] = 1
+    while n > 0 :
+        if n & 1 : res = res @ mat % mod
+        mat = mat @ mat % mod
+        n >>= 1
+    return res
